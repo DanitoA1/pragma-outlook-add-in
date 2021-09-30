@@ -55,7 +55,7 @@ export default {
     },
     async checkUserLoggedIn () {
       this.isLoading = true
-      const email = window.Office.context.mailbox.userProfile.emailAddress
+      const email = 'rohit@rampwin.com'
       await fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {

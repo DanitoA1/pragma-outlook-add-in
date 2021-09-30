@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     gotoDashboard () {
-      this.$router.push({ name: 'Snippets' })
+      this.$router.push({ name: 'TextFormat' })
     },
     async getSnippets () {
       this.isLoading = true

@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     gotoDashboard () {
-      this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'TextFormat' })
     },
     expandSnippet (index) {
       this.expandIndex = index
