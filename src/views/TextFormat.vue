@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <snippets v-if="tabs === 'get-snippet'" />
+    <snippets v-if="tabs === 'get-snippet'" :snippets="snippets" />
     <rewrite v-if="tabs === 'rewrite'" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" />
     <shorten v-if="tabs === 'shorten'" />
     <add-snippet v-if="tabs === 'add-snippet'" />
@@ -43,7 +43,8 @@ export default {
   data: () => ({
     tabs: 'get-snippet',
     isLoading: false,
-    allRephrase: {}
+    allRephrase: {},
+    snippets: []
   }),
   computed: {
     userId () {
@@ -68,6 +69,18 @@ export default {
     changeTab (val) {
       this.tabs = val
     },
+    async getSnippets () {
+      this.isLoading = true
+      await fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
+        .then(res => res.json())
+        .then(data => {
+          this.isLoading = false
+          if (data && data.data.length > 0) {
+            this.snippets = data.data
+            console.log(data)
+          }
+        })
+    },
     async getRephrase () {
       console.log('I am rephrasing')
       this.isLoading = true
@@ -85,6 +98,7 @@ export default {
     }
   },
   mounted () {
+    this.getSnippets()
     this.getRephrase()
   }
 }

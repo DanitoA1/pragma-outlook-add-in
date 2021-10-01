@@ -14,17 +14,17 @@
     <ul v-else class="overflow-auto h-full">
       <li v-for="(rephrase, index) in allRephrase.data" :key="index" class="mt-2 cursor-pointer">
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
-          <p class="text-primary text-14px">
-            {{ rephrase.sentence }}
-          </p>
+          <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
+          <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p>
         </div>
         <div v-if="index === expandIndex" class="border-b-2 border-light-grey">
           <div class="w-11/12 mx-auto p-3 mt-2">
             <div class="flex justify-between">
-              <div class="flex content-center">
+              <div v-if="index !== editIndex" @click="editSnippet(index)" class="flex content-center">
                 <img src="@/assets/svg/edit.svg" alt="">
                 <span class="text-primary pt-0.5 text-14px ml-2">Edit</span>
               </div>
+              <div v-else></div>
               <button @click="insertSnippet(rephrase.sentence)" class="w-94px text-primary rounded-md border border-primary bg-light-pink">
                 Insert
               </button>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor'
+
 export default {
   name: 'Rewrite',
   props: {
@@ -50,14 +52,26 @@ export default {
       type: Boolean
     }
   },
+  components: { VueEditor },
   data: () => ({
-    expandIndex: null
+    expandIndex: null,
+    editIndex: null
   }),
   methods: {
     expandSnippet (index) {
+      if (this.editIndex !== index) {
+        this.editIndex = null
+      }
       this.expandIndex = index
     },
+    editSnippet (index) {
+      if (this.editIndex !== index) {
+        this.editIndex = null
+      }
+      this.editIndex = index
+    },
     insertSnippet (text) {
+      this.editIndex = null
       const item = window.Office.context.mailbox.item
       item.body.getTypeAsync(
         function (result) {
