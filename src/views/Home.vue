@@ -39,7 +39,8 @@ export default {
     isLoggedIn: false,
     userId: '',
     authorizationUrl: '',
-    windowRef: ''
+    windowRef: '',
+    intervalRef: ''
   }),
   mounted () {
     this.checkUserLoggedIn()
@@ -55,7 +56,7 @@ export default {
     },
     async checkUserLoggedIn () {
       this.isLoading = true
-      const email = 'rohit@rampwin.com'
+      const email = window.Office.context.mailbox.userProfile.emailAddress
       await fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
@@ -64,6 +65,10 @@ export default {
             this.userId = data.id
             this.$store.commit('SET_USER_ID', data.id)
             this.isLoading = false
+            clearInterval(this.intervalRef)
+            if (this.windowRef && !this.windowRef.closed) {
+              this.windowRef.close()
+            }
             this.$router.push({ name: 'Dashboard' })
           } else if (data.status === 'failed') {
             this.isLoggedIn = false
@@ -78,12 +83,11 @@ export default {
     },
     openLoginPopup () {
       this.windowRef = window.open(this.authorizationUrl, 'Auth Pragma', 'width=500, height=400')
-    }
-  },
-  watch: {
-    windowRef (val) {
-      this.checkUserLoggedIn()
-      console.log(val)
+      if (!this.intervalRef) {
+        this.intervalRef = setInterval(() => {
+          this.checkUserLoggedIn()
+        }, 2000)
+      }
     }
   }
 }
