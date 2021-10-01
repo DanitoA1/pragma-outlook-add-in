@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     gotoDashboard () {
-      this.$router.push({ name: 'Dashboard' })
+      this.$router.push({ name: 'TextFormat' })
     },
     async checkUserLoggedIn () {
       this.isLoading = true
@@ -69,7 +69,7 @@ export default {
             if (this.windowRef && !this.windowRef.closed) {
               this.windowRef.close()
             }
-            this.$router.push({ name: 'Dashboard' })
+            this.gotoDashboard()
           } else if (data.status === 'failed') {
             this.isLoggedIn = false
             this.authorizationUrl = data.authorization_url

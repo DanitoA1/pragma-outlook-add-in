@@ -2,11 +2,11 @@
   <div class="h-screen">
     <div class="relative text-gray-600 mt-5 w-11/12 mx-auto">
       <input type="search" name="serch" placeholder="//snptname" class="bg-white w-full h-10 px-5 pr-10 border border-light-grey rounded-md text-sm focus:outline-none">
-      <button @click="gotoDashboard" type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+      <!-- <button @click="gotoDashboard" type="submit" class="absolute right-0 top-0 mt-3 mr-4">
         <img src="@/assets/svg/search.svg" alt="">
-      </button>
+      </button> -->
     </div>
-   <ul class="overflow-auto h-full">
+    <ul class="overflow-auto">
       <li v-for="(snippet, index) in snippets" :key="index" @click="expandSnippet(index)" class="cursor-pointer mt-2">
         <div class="w-11/12 mx-auto p-3 rounded-sm list-item">
           <p class="montserrat font-semibold text-primary text-12px">//{{ snippet.shortcode }}</p>
@@ -35,20 +35,42 @@
 <script>
 export default {
   name: 'Snippets',
-  props: {
-    snippets: {
-      type: Array
+  // props: {
+  //   snippets: {
+  //     type: Array
+  //   }
+  // },
+  computed: {
+    userId () {
+      return this.$store.state.loggedInUserId
+    },
+    apiBaseUrl () {
+      return this.$store.state.apiBaseUrl
     }
   },
   data: () => ({
-    expandIndex: null
+    expandIndex: null,
+    isLoading: false,
+    snippets: []
   }),
   mounted () {
-    // this.formatSnippets()
+    this.getSnippets()
   },
   methods: {
-    gotoDashboard () {
-      this.$router.push({ name: 'TextFormat' })
+    async getSnippets () {
+      this.isLoading = true
+      await fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
+        .then(res => res.json())
+        .then(data => {
+          this.isLoading = false
+          if (data && data.data.length > 0) {
+            this.snippets = data.data
+          }
+        })
+    },
+    isSnippets () {
+      if (this.snippets && this.snippets.length > 0) return true
+      else return false
     },
     expandSnippet (index) {
       this.expandIndex = index
