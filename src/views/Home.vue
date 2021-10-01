@@ -64,6 +64,7 @@ export default {
             this.userId = data.id
             this.$store.commit('SET_USER_ID', data.id)
             this.isLoading = false
+            this.$router.push({ name: 'Dashboard' })
           } else if (data.status === 'failed') {
             this.isLoggedIn = false
             this.authorizationUrl = data.authorization_url

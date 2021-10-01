@@ -9,19 +9,19 @@
    <ul class="overflow-auto h-full">
       <li v-for="(snippet, index) in snippets" :key="index" @click="expandSnippet(index)" class="cursor-pointer mt-2">
         <div class="w-11/12 mx-auto p-3 rounded-sm list-item">
-          <p class="montserrat font-semibold text-primary text-12px">// snptname</p>
-          <h1 class="text-14px mb-2">{{ snippet.key }}</h1>
-          <span class="text-primary border text-12px border-primary rounded-xl px-2">sales</span>
+          <p class="montserrat font-semibold text-primary text-12px">//{{ snippet.shortcode }}</p>
+          <h1 class="text-14px mb-2">{{ snippet.name }}</h1>
+          <!-- <span class="text-primary border text-12px border-primary rounded-xl px-2">sales</span> -->
         </div>
         <div v-if="index === expandIndex" class="border-b-2 border-light-grey">
           <div class="w-11/12 mx-auto p-3 mt-2">
-            <p v-html="snippet.value"></p>
+            <p v-html="snippet.body"></p>
             <div class="flex justify-between">
               <div class="flex content-center">
                 <img src="@/assets/svg/edit.svg" alt="">
                 <span class="text-primary pt-0.5 text-14px ml-2">Edit</span>
               </div>
-              <button @click="insertSnippet(snippet.value)" class="w-94px text-primary rounded-md border border-primary bg-light-pink">
+              <button @click="insertSnippet(snippet.body)" class="w-94px text-primary rounded-md border border-primary bg-light-pink">
                 Insert
               </button>
             </div>
