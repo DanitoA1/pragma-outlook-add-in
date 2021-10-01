@@ -48,6 +48,21 @@ export default {
   computed: {
     apiBaseUrl () {
       return this.$store.state.apiBaseUrl
+    },
+    highlightedText () {
+      var text = 'something here'
+      const item = window.Office.context.mailbox.item
+      item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+        if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+          text = ''
+        } else {
+          text = asyncResult.value.data
+          console.log(text + ' First one')
+          localStorage.setItem('text', text)
+          console.log(localStorage.getItem('text'))
+        }
+      })
+      return localStorage.getItem('text')
     }
   },
   methods: {
@@ -64,6 +79,12 @@ export default {
             this.isLoggedIn = true
             this.userId = data.id
             this.$store.commit('SET_USER_ID', data.id)
+            if (this.isSelectedText()) {
+              console.log(localStorage.getItem('text'))
+              this.$router.push({ name: 'TextFormat' })
+            } else {
+              console.log('No text selected')
+            }
             this.isLoading = false
             clearInterval(this.intervalRef)
             if (this.windowRef && !this.windowRef.closed) {
@@ -88,6 +109,28 @@ export default {
           this.checkUserLoggedIn()
         }, 2000)
       }
+    },
+    isSelectedText () {
+      var text = ''
+      const item = window.Office.context.mailbox.item
+      item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+        localStorage.setItem('text', '')
+        if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+          localStorage.setItem('text', '')
+        } else {
+          text = asyncResult.value.data
+          console.log(text)
+          localStorage.setItem('text', text)
+        }
+      })
+      if (localStorage.getItem('text') !== '') return true
+      else return false
+    }
+  },
+  watch: {
+    windowRef (val) {
+      this.checkUserLoggedIn()
+      console.log(val)
     }
   }
 }
