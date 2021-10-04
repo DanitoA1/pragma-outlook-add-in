@@ -40,8 +40,15 @@ import Snippets from '@/components/Snippets.vue'
 
 export default {
   name: 'TextFormat',
+  props: {
+    selectedText: {
+      type: String
+    },
+    tabs: {
+      type: String
+    }
+  },
   data: () => ({
-    tabs: 'get-snippet',
     isLoading: false,
     allRephrase: {},
     snippets: []
@@ -52,11 +59,6 @@ export default {
     },
     apiBaseUrl () {
       return this.$store.state.apiBaseUrl
-    },
-    highlightedText () {
-      const text = localStorage.getItem('text')
-      localStorage.removeItem('text')
-      return text
     }
   },
   components: {

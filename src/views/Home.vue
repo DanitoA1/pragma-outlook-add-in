@@ -14,10 +14,7 @@
       <div v-else class="self-center mt-4">
         <p v-if="!isLoggedIn" class="font-semibold self-center">Please <span class="text-primary">login</span> to continue</p>
         <div class="self-center flex mt-8">
-          <button v-if="isLoggedIn" @click="gotoDashboard()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
-            Get Snippet
-          </button>
-          <button v-else @click="openLoginPopup()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
+          <button @click="openLoginPopup()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
             Log In
           </button>
           <img class="ml-4 -mt-6" src="@/assets/svg/arrow.svg" alt="">
@@ -66,8 +63,13 @@ export default {
     }
   },
   methods: {
-    gotoDashboard () {
-      this.$router.push({ name: 'TextFormat' })
+    async handleRedirection () {
+      const selectedText = await this.getSelectedText()
+      if (selectedText) {
+        this.$router.push({ name: 'TextFormat', params: { tabs: 'rewrite', highlightedText: selectedText } })
+      } else {
+        this.$router.push({ name: 'TextFormat', params: { tabs: 'get-snippet' } })
+      }
     },
     async checkUserLoggedIn () {
       this.isLoading = true
@@ -79,18 +81,18 @@ export default {
             this.isLoggedIn = true
             this.userId = data.id
             this.$store.commit('SET_USER_ID', data.id)
-            if (this.isSelectedText()) {
-              console.log(localStorage.getItem('text'))
-              this.$router.push({ name: 'TextFormat' })
-            } else {
-              console.log('No text selected')
-            }
+            // if (this.isSelectedText()) {
+            //   console.log(localStorage.getItem('text'))
+            //   this.$router.push({ name: 'TextFormat' })
+            // } else {
+            //   console.log('No text selected')
+            // }
             this.isLoading = false
             clearInterval(this.intervalRef)
             if (this.windowRef && !this.windowRef.closed) {
               this.windowRef.close()
             }
-            this.gotoDashboard()
+            this.handleRedirection()
           } else if (data.status === 'failed') {
             this.isLoggedIn = false
             this.authorizationUrl = data.authorization_url
@@ -110,27 +112,22 @@ export default {
         }, 2000)
       }
     },
-    isSelectedText () {
-      var text = ''
-      const item = window.Office.context.mailbox.item
-      item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
-        localStorage.setItem('text', '')
-        if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
-          localStorage.setItem('text', '')
-        } else {
-          text = asyncResult.value.data
-          console.log(text)
-          localStorage.setItem('text', text)
-        }
+
+    getSelectedText () {
+      return new Promise((resolve, reject) => {
+        let text = ''
+        const item = window.Office.context.mailbox.item
+        item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+          // localStorage.setItem('text', '')
+          if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+            // localStorage.setItem('text', '')
+            resolve(false)
+          } else {
+            text = asyncResult.value.data
+            resolve(text)
+          }
+        })
       })
-      if (localStorage.getItem('text') !== '') return true
-      else return false
-    }
-  },
-  watch: {
-    windowRef (val) {
-      this.checkUserLoggedIn()
-      console.log(val)
     }
   }
 }
