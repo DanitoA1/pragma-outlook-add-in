@@ -100,6 +100,9 @@ export default {
   mounted () {
     this.getSnippets()
     this.getRephrase()
+    if (this.highlightedText) {
+      this.tabs = 'rewrite'
+    }
   }
 }
 </script>
