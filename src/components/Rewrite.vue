@@ -26,13 +26,16 @@
               </div>
               <div v-else></div>
               <button @click="insertSnippet(rephrase.sentence)" class="w-94px text-primary rounded-md border border-primary bg-light-pink">
-                Insert
+                Replace
               </button>
             </div>
           </div>
         </div>
       </li>
     </ul>
+    <p v-if="apiError"  class="text-14px font-medium">
+      Some error occured while fetching data. Please try again.
+    </p>
   </div>
 </template>
 
@@ -49,6 +52,9 @@ export default {
       type: Object
     },
     isLoading: {
+      type: Boolean
+    },
+    apiError: {
       type: Boolean
     }
   },
@@ -73,6 +79,7 @@ export default {
     insertSnippet (text) {
       this.editIndex = null
       const item = window.Office.context.mailbox.item
+
       item.body.getTypeAsync(
         function (result) {
           if (result.status === window.Office.AsyncResultStatus.Failed) {
@@ -84,7 +91,7 @@ export default {
               // Body is of HTML type.
               // Specify HTML in the coercionType parameter
               // of setSelectedDataAsync.
-              item.body.setSelectedDataAsync(
+              item.body.setAsync(
                 text,
                 {
                   coercionType: window.Office.CoercionType.Html,
@@ -101,7 +108,7 @@ export default {
                 })
             } else {
               // Body is of text type.
-              item.body.setSelectedDataAsync(
+              item.body.setAsync(
                 text,
                 {
                   coercionType: window.Office.CoercionType.Text,

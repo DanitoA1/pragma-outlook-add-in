@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen">
     <div class="relative text-gray-600 mt-5 w-11/12 mx-auto">
-      <input v-model="search" type="search" name="serch" placeholder="//snptname" class="bg-white w-full h-10 px-5 pr-10 border border-light-grey rounded-md text-sm focus:outline-none">
+      <input v-model="search" type="search" name="serch" placeholder="//snptname" class="bg-white w-full h-10 px-5 border border-light-grey rounded-md text-sm focus:outline-none">
       <!-- <button @click="gotoDashboard" type="submit" class="absolute right-0 top-0 mt-3 mr-4">
         <img src="@/assets/svg/search.svg" alt="">
       </button> -->

@@ -18,24 +18,24 @@
           <img v-else :class="{ 'pt-2.5': tabs === 'shorten'}" src="@/assets/svg/shorten-2.svg" alt="">
           <span v-if="tabs === 'shorten'" class="ml-2 text-14px">Shorten</span>
         </div> -->
-        <div @click="changeTab('add-snippet')" :class="tabs === 'add-snippet' ? 'rounded-full bg-primary px-3 py-1 text-white' : ''" class="flex cursor-pointer">
+        <!-- <div @click="changeTab('add-snippet')" :class="tabs === 'add-snippet' ? 'rounded-full bg-primary px-3 py-1 text-white' : ''" class="flex cursor-pointer">
           <img v-if="tabs === 'add-snippet'" src="@/assets/svg/add-snippet.svg" alt="">
           <img v-else :class="{ 'pt-1': tabs === 'add-snippet'}" src="@/assets/svg/add-snippet-2.svg" alt="">
           <span v-if="tabs === 'add-snippet'" class="ml-2 text-14px">Add to My Snippets</span>
-        </div>
+        </div> -->
       </div>
     </div>
     <snippets v-if="tabs === 'get-snippet'" :snippets="snippets" />
-    <rewrite v-if="tabs === 'rewrite'" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" />
-    <shorten v-if="tabs === 'shorten'" />
+    <rewrite v-if="tabs === 'rewrite'" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" :apiError="apiError" />
+    <!-- <shorten v-if="tabs === 'shorten'" /> -->
     <add-snippet v-if="tabs === 'add-snippet'" />
   </div>
 </template>
 
 <script>
 import Rewrite from '@/components/Rewrite.vue'
-import Shorten from '@/components/Shorten.vue'
-import AddSnippet from '@/components/AddSnippet.vue'
+// import Shorten from '@/components/Shorten.vue'
+// import AddSnippet from '@/components/AddSnippet.vue'
 import Snippets from '@/components/Snippets.vue'
 
 export default {
@@ -43,6 +43,7 @@ export default {
   data: () => ({
     tabs: 'get-snippet',
     isLoading: false,
+    apiError: null,
     allRephrase: {},
     snippets: []
   }),
@@ -54,15 +55,15 @@ export default {
       return this.$store.state.apiBaseUrl
     },
     highlightedText () {
-      const text = localStorage.getItem('text')
-      localStorage.removeItem('text')
-      return text
+      const selectedText = localStorage.getItem('selectedText')
+      localStorage.removeItem('selectedText')
+      return selectedText
     }
   },
   components: {
     Rewrite,
-    Shorten,
-    AddSnippet,
+    // Shorten,
+    // AddSnippet,
     Snippets
   },
   methods: {
@@ -82,26 +83,31 @@ export default {
         })
     },
     async getRephrase () {
-      console.log('I am rephrasing')
       this.isLoading = true
-      await fetch(`${this.apiBaseUrl}/rephraseSentence?id=${this.userId}&sentense=${this.highlightedText}`)
+      this.apiError = null
+      await fetch(`${this.apiBaseUrl}/rephraseSentence?id=${this.userId}&sentense=${encodeURIComponent(this.highlightedText)}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data)
           this.allRephrase = data
           this.isLoading = false
         })
-        .catch(error => {
-          console.log(error)
+        .catch((error) => {
+          this.apiError = error
           this.isLoading = false
         })
     }
   },
   mounted () {
-    this.getSnippets()
-    this.getRephrase()
     if (this.highlightedText) {
       this.tabs = 'rewrite'
+    }
+    switch (this.tabs) {
+      case 'rewrite':
+        this.getRephrase()
+        break
+      default:
+        this.getSnippets()
+        break
     }
   }
 }
