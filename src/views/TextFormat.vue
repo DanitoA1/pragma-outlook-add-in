@@ -67,15 +67,18 @@ export default {
     Snippets
   },
   methods: {
-    changeTab (val) {
-      this.tabs = val
+    async changeTab (val) {
       switch (this.tabs) {
         case 'get-snippet':
           this.getSnippets()
           break
+        case 'rewrite':
+          this.highlightedText = await this.getSelectedText()
+          break
         default:
           break
       }
+      this.tabs = val
     },
     async getSnippets () {
       this.isLoading = true
@@ -89,10 +92,26 @@ export default {
           }
         })
     },
+    async getSelectedText () {
+      const item = window.Office.context.mailbox.item
+      return new Promise((resolve, reject) => {
+        item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+          // Put blank value in localstrage for selected Text
+          if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+            resolve('')
+          } else {
+            resolve(asyncResult.value.data)
+          }
+        })
+      })
+    },
     async getRephrase () {
       this.isLoading = true
       this.apiError = null
-      await fetch(`${this.apiBaseUrl}/rephraseSentence?id=${this.userId}&sentense=${encodeURIComponent(this.highlightedText)}`)
+      await fetch(`${this.apiBaseUrl}/rephraseSentence?` + new URLSearchParams({
+        id: this.userId,
+        sentence: this.highlightedText
+      }))
         .then(res => res.json())
         .then(data => {
           this.allRephrase = data
