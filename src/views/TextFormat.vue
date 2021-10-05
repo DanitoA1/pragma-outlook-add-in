@@ -69,6 +69,13 @@ export default {
   methods: {
     changeTab (val) {
       this.tabs = val
+      switch (this.tabs) {
+        case 'get-snippet':
+          this.getSnippets()
+          break
+        default:
+          break
+      }
     },
     async getSnippets () {
       this.isLoading = true
