@@ -26,7 +26,7 @@
       </div>
     </div>
     <snippets v-if="tabs === 'get-snippet'" :snippets="snippets" />
-    <rewrite v-if="tabs === 'rewrite'" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" :apiError="apiError" />
+    <rewrite v-if="tabs === 'rewrite'" @getRephrase="getRephrase" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" :apiError="apiError" />
     <!-- <shorten v-if="tabs === 'shorten'" /> -->
     <add-snippet v-if="tabs === 'add-snippet'" />
   </div>
@@ -81,6 +81,11 @@ export default {
       this.tabs = val
     },
     async getSnippets () {
+      // This is to ensure we don't call the endpoint each time tab changes, if we already have snippets
+      if (this.snippets) {
+        return
+      }
+      // Proceed if no snippets yet
       this.isLoading = true
       await fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
         .then(res => res.json())
@@ -105,12 +110,12 @@ export default {
         })
       })
     },
-    async getRephrase () {
+    async getRephrase (text) {
       this.isLoading = true
       this.apiError = null
       await fetch(`${this.apiBaseUrl}/rephraseSentence?` + new URLSearchParams({
         id: this.userId,
-        sentence: this.highlightedText
+        sentence: text
       }))
         .then(res => res.json())
         .then(data => {
@@ -129,7 +134,7 @@ export default {
     }
     switch (this.tabs) {
       case 'rewrite':
-        this.getRephrase()
+        this.getRephrase(this.highlightedText)
         break
       default:
         this.getSnippets()

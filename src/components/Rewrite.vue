@@ -1,12 +1,15 @@
 <template>
   <div class="h-screen">
-    <div class="w-11/12 mx-auto p-3 mt-3 rounded-sm border-l-4 border-primary bg-light-pink">
-      <p v-if="highlightedText" class="text-14px font-medium">
-        {{ highlightedText }}
+    <div @click="isRewriteEdit = true" class="w-11/12 mx-auto p-3 mt-3 rounded-sm border-l-4 border-primary bg-light-pink">
+      <p v-if="rephraseText && !isRewriteEdit" class="text-14px font-medium">
+        {{ rephraseText }}
       </p>
-      <p v-else class="text-14px font-medium">
-        No text Selected!!!
-      </p>
+      <textarea v-if="!rephraseText || isRewriteEdit" name="rewrite" cols="30" rows="2" placeholder="Enter a word to Rephrase" v-model="rephraseText"></textarea>
+    </div>
+    <div v-if="isRewriteEdit" class="flex justify-center">
+      <button @click="$emit('getRephrase', rephraseText), isRewriteEdit = false" class="bg-primary mt-4 text-white w-113px rounded-md py-2">
+        Rephrase
+      </button>
     </div>
     <div v-if="isLoading" class="mt-10">
       <img class="animate-spin mx-auto" height="60" width="60" src="@/assets/svg/spinner.svg" alt="spinner">
@@ -60,9 +63,14 @@ export default {
   },
   components: { VueEditor },
   data: () => ({
+    rephraseText: '',
     expandIndex: null,
-    editIndex: null
+    editIndex: null,
+    isRewriteEdit: false
   }),
+  mounted () {
+    this.rephraseText = this.highlightedText
+  },
   methods: {
     expandSnippet (index) {
       if (this.editIndex !== index) {
