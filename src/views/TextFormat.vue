@@ -82,7 +82,7 @@ export default {
     },
     async getSnippets () {
       // This is to ensure we don't call the endpoint each time tab changes, if we already have snippets
-      if (this.snippets) {
+      if (this.snippets && this.snippets.length) {
         return
       }
       // Proceed if no snippets yet
@@ -91,9 +91,8 @@ export default {
         .then(res => res.json())
         .then(data => {
           this.isLoading = false
-          if (data && data.data.length > 0) {
+          if (data && data.data && data.data.length > 0) {
             this.snippets = data.data
-            console.log(data)
           }
         })
     },
