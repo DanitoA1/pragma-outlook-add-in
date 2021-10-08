@@ -1,13 +1,13 @@
 <template>
   <div class="h-screen">
     <div @click="isRewriteEdit = true" class="w-11/12 mx-auto p-3 mt-3 rounded-sm border-l-4 border-primary bg-light-pink">
-      <p v-if="rephraseText && !isRewriteEdit" class="text-14px font-medium">
-        {{ rephraseText }}
+      <p v-if="highlightedText && !isRewriteEdit" class="text-14px font-medium">
+        {{ highlightedText }}
       </p>
-      <textarea v-if="!rephraseText || isRewriteEdit" name="rewrite" cols="30" rows="2" placeholder="Enter a word to Rephrase" v-model="rephraseText"></textarea>
+      <textarea v-if="!highlightedText || isRewriteEdit" name="rewrite" cols="30" rows="2" placeholder="Enter a word to Rephrase" v-model="highlightedText"></textarea>
     </div>
-    <div v-if="isRewriteEdit" class="flex justify-center">
-      <button @click="$emit('getRephrase', rephraseText), isRewriteEdit = false" class="bg-primary mt-4 text-white w-113px rounded-md py-2">
+    <div class="flex justify-center">
+      <button @click="$emit('getRephrase', highlightedText), $emit('setHighlightedText', highlightedText)" class="bg-primary mt-4 text-white w-113px rounded-md py-2">
         Rephrase
       </button>
     </div>
@@ -63,13 +63,12 @@ export default {
   },
   components: { VueEditor },
   data: () => ({
-    rephraseText: '',
     expandIndex: null,
     editIndex: null,
-    isRewriteEdit: false
+    isRewriteEdit: true
   }),
   mounted () {
-    this.rephraseText = this.highlightedText
+    // this.highlightedText = this.highlightedText
   },
   methods: {
     expandSnippet (index) {

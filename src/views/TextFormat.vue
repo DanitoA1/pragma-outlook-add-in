@@ -26,7 +26,7 @@
       </div>
     </div>
     <snippets v-if="tabs === 'get-snippet'" :snippets="snippets" />
-    <rewrite v-if="tabs === 'rewrite'" @getRephrase="getRephrase" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" :apiError="apiError" />
+    <rewrite v-if="tabs === 'rewrite'" @setHighlightedText="setHighlightedText" @getRephrase="getRephrase" :highlightedText="highlightedText" :allRephrase="allRephrase" :isLoading="isLoading" :apiError="apiError" />
     <!-- <shorten v-if="tabs === 'shorten'" /> -->
     <add-snippet v-if="tabs === 'add-snippet'" />
   </div>
@@ -45,7 +45,8 @@ export default {
     isLoading: false,
     apiError: null,
     allRephrase: {},
-    snippets: []
+    snippets: [],
+    highlightedText: ''
   }),
   computed: {
     userId () {
@@ -53,11 +54,6 @@ export default {
     },
     apiBaseUrl () {
       return this.$store.state.apiBaseUrl
-    },
-    highlightedText () {
-      const selectedText = localStorage.getItem('selectedText')
-      localStorage.removeItem('selectedText')
-      return selectedText
     }
   },
   components: {
@@ -67,7 +63,16 @@ export default {
     Snippets
   },
   methods: {
+    setHighlightedText (highlightedText) {
+      this.highlightedText = highlightedText
+    },
+    getHighlightedText () {
+      const selectedText = localStorage.getItem('selectedText')
+      localStorage.removeItem('selectedText')
+      return selectedText
+    },
     async changeTab (val) {
+      this.tabs = val
       switch (this.tabs) {
         case 'get-snippet':
           this.getSnippets()
@@ -78,7 +83,6 @@ export default {
         default:
           break
       }
-      this.tabs = val
     },
     async getSnippets () {
       // This is to ensure we don't call the endpoint each time tab changes, if we already have snippets
@@ -128,17 +132,25 @@ export default {
     }
   },
   mounted () {
+    this.highlightedText = this.getHighlightedText()
     if (this.highlightedText) {
       this.tabs = 'rewrite'
     }
     switch (this.tabs) {
       case 'rewrite':
-        this.getRephrase(this.highlightedText)
+        // this.getRephrase(this.highlightedText)
         break
       default:
         this.getSnippets()
         break
     }
+
+    setInterval(async () => {
+      if (this.tabs === 'rewrite' && !this.highlightedText) {
+        // Check if any text is selected
+        this.highlightedText = await this.getSelectedText()
+      }
+    }, 2000)
   }
 }
 </script>
