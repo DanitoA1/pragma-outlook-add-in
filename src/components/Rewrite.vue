@@ -91,7 +91,7 @@ export default {
               // Body is of HTML type.
               // Specify HTML in the coercionType parameter
               // of setSelectedDataAsync.
-              item.body.setAsync(
+              item.body.setSelectedDataAsync(
                 text,
                 {
                   coercionType: window.Office.CoercionType.Html,
@@ -108,7 +108,7 @@ export default {
                 })
             } else {
               // Body is of text type.
-              item.body.setAsync(
+              item.body.setSelectedDataAsync(
                 text,
                 {
                   coercionType: window.Office.CoercionType.Text,
