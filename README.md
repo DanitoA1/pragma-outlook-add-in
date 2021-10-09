@@ -55,3 +55,6 @@ Then choose show taskpane.
 
 That's how you will use the pragma-outlook addin.
 
+
+## Install outlook in Desktop Outlook
+https://support.microsoft.com/en-us/office/installing-office-add-ins-to-your-mailbox-65e243f5-cdac-4987-8185-97069a6058cb#:~:text=In%20Outlook%2C%20click%20Get%20Add,want%20to%20add%20to%20Outlook.
