@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Pragma"/>
   <Description DefaultValue="Pragma Outlook Vuejs Add-in"/>
-  <IconUrl DefaultValue="https://localhost:3000/assets/img/Pragma.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/img/Pragma.png"/>
+  <IconUrl DefaultValue="https://rampwin-whatsapp.web.app/assets/img/Pragma.png"/>
+  <HighResolutionIconUrl DefaultValue="https://rampwin-whatsapp.web.app/assets/img/Pragma.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
     <AppDomain>https://www.contoso.com</AppDomain>
@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3000/#/index.html"/>
+        <SourceLocation DefaultValue="https://rampwin-whatsapp.web.app/#/index.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -85,13 +85,13 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://rampwin-whatsapp.web.app/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://rampwin-whatsapp.web.app/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://rampwin-whatsapp.web.app/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/#/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/#/index.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://rampwin-whatsapp.web.app/#/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://rampwin-whatsapp.web.app/#/index.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>

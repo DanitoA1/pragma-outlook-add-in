@@ -14,10 +14,7 @@
       <div v-else class="self-center mt-4">
         <p v-if="!isLoggedIn" class="font-semibold self-center">Please <span class="text-primary">login</span> to continue</p>
         <div class="self-center flex mt-8">
-          <button v-if="isLoggedIn" @click="gotoDashboard()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
-            Get Snippet
-          </button>
-          <button v-else @click="openLoginPopup()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
+          <button @click="openLoginPopup()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
             Log In
           </button>
           <img class="ml-4 -mt-6" src="@/assets/svg/arrow.svg" alt="">
@@ -39,9 +36,11 @@ export default {
     isLoggedIn: false,
     userId: '',
     authorizationUrl: '',
-    windowRef: ''
+    windowRef: '',
+    intervalRef: ''
   }),
   mounted () {
+    this.getSelectedText()
     this.checkUserLoggedIn()
   },
   computed: {
@@ -50,12 +49,12 @@ export default {
     }
   },
   methods: {
-    gotoDashboard () {
-      this.$router.push({ name: 'Dashboard' })
+    async handleRedirection () {
+      this.$router.push({ name: 'TextFormat' })
     },
     async checkUserLoggedIn () {
       this.isLoading = true
-      const email = 'rohit@rampwin.com'
+      const email = window.Office.context.mailbox.userProfile.emailAddress
       await fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
@@ -64,7 +63,11 @@ export default {
             this.userId = data.id
             this.$store.commit('SET_USER_ID', data.id)
             this.isLoading = false
-            this.$router.push({ name: 'Dashboard' })
+            clearInterval(this.intervalRef)
+            if (this.windowRef && !this.windowRef.closed) {
+              this.windowRef.close()
+            }
+            this.handleRedirection()
           } else if (data.status === 'failed') {
             this.isLoggedIn = false
             this.authorizationUrl = data.authorization_url
@@ -78,12 +81,23 @@ export default {
     },
     openLoginPopup () {
       this.windowRef = window.open(this.authorizationUrl, 'Auth Pragma', 'width=500, height=400')
-    }
-  },
-  watch: {
-    windowRef (val) {
-      this.checkUserLoggedIn()
-      console.log(val)
+      if (!this.intervalRef) {
+        this.intervalRef = setInterval(() => {
+          this.checkUserLoggedIn()
+        }, 2000)
+      }
+    },
+
+    getSelectedText () {
+      const item = window.Office.context.mailbox.item
+      item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+        localStorage.setItem('selectedText', '')
+        // Put blank value in localstrage for selected Text
+        if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+        } else {
+          localStorage.setItem('selectedText', asyncResult.value.data)
+        }
+      })
     }
   }
 }
