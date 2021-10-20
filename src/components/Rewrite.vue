@@ -18,7 +18,9 @@
       <li v-for="(rephrase, index) in allRephrase.data" :key="index" class="mt-2 cursor-pointer">
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
           <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
-          <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p>
+          <text-highlight v-else class="text-primary text-14px" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
+
+          <!-- <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p> -->
         </div>
         <div v-if="index === expandIndex" class="border-b-2 border-light-grey">
           <div class="w-11/12 mx-auto p-3 mt-2">
@@ -44,6 +46,7 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
+import TextHighlight from 'vue-text-highlight'
 
 export default {
   name: 'Rewrite',
@@ -61,7 +64,7 @@ export default {
       type: Boolean
     }
   },
-  components: { VueEditor },
+  components: { VueEditor, TextHighlight },
   data: () => ({
     expandIndex: null,
     editIndex: null,
