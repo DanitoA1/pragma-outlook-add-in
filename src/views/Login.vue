@@ -19,8 +19,11 @@
           </button>
           <img class="ml-4 -mt-6" src="@/assets/svg/arrow.svg" alt="">
         </div>
-        <div v-else>
+        <div v-if="!this.authorizationUrl && !isLoggedIn">
           We are sorry, login is unavailable at the moment, please try again later.
+        </div>
+        <div v-if="isLoggedIn">
+          Logged in, Redirecting..
         </div>
       </div>
     </div>
@@ -51,7 +54,7 @@ export default {
     }
   },
   methods: {
-    async handleRedirection () {
+    handleRedirection () {
       this.$router.push({ name: 'Main' })
     },
     checkUserLoggedIn () {
