@@ -4,11 +4,11 @@
       <p v-if="highlightedText && !isRewriteEdit" class="text-14px font-medium">
         {{ highlightedText }}
       </p>
-      <textarea v-if="!highlightedText || isRewriteEdit" name="rewrite" cols="30" rows="2" placeholder="Enter a word to Rephrase" v-model="highlightedText"></textarea>
+      <textarea v-if="!highlightedText || isRewriteEdit" name="rewrite" cols="30" rows="2" placeholder="Rewrite a sentence" v-model="highlightedText"></textarea>
     </div>
     <div class="flex justify-center">
       <button @click="$emit('getRephrase', highlightedText), $emit('setHighlightedText', highlightedText)" class="bg-primary mt-4 text-white w-113px rounded-md py-2">
-        Rephrase
+        Rewrite
       </button>
     </div>
     <div v-if="isLoading" class="mt-10">
@@ -18,7 +18,7 @@
       <li v-for="(rephrase, index) in allRephrase.data" :key="index" class="mt-2 cursor-pointer">
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
           <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
-          <text-highlight v-else class="originalText text-14px" highlightStyle="modifiedText" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
+          <text-highlight v-else class="originalText text-14px" highlightStyle="color: #6759FF;" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
 
           <!-- <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p> -->
         </div>
@@ -49,7 +49,7 @@
   color: #828493;
 }
 .modifiedText {
-  background: #6759FF;
+  color: #6759FF;
 }
 </style>
 
