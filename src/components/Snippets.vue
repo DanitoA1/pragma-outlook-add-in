@@ -88,7 +88,11 @@ export default {
       if (this.editIndex !== index) {
         this.editIndex = null
       }
-      this.expandIndex = index
+      if (this.expandIndex === index) {
+        this.expandIndex = null
+      } else {
+        this.expandIndex = index
+      }
     },
     editSnippet (index) {
       if (this.editIndex !== index) {
