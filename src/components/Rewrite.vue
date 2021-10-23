@@ -18,7 +18,8 @@
       <li v-for="(rephrase, index) in allRephrase.data" :key="index" class="mt-2 cursor-pointer">
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
           <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
-          <text-highlight v-else class="newText text-14px" highlightStyle="color: #828493;background: transparent;" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
+
+          <text-highlight v-else class="newText text-14px" highlightStyle="color: #828493;background: transparent !important;" :caseSensitive="false" :wholeWordMatch="true" :queries="rephrase.sentence.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(x => !highlightedText.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())).filter(word => word.length > 3)">{{ rephrase.sentence }}</text-highlight>
 
           <!-- <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p> -->
         </div>
@@ -47,6 +48,7 @@
 <style scoped>
 .newText {
   color: #6759FF;font-weight: bold;
+  background: transparent !important;
 }
 </style>
 
