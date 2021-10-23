@@ -54,10 +54,10 @@ export default {
     async handleRedirection () {
       this.$router.push({ name: 'Main' })
     },
-    async checkUserLoggedIn () {
+    checkUserLoggedIn () {
       this.isLoading = true
       const email = window.Office.context.mailbox.userProfile.emailAddress
-      await fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
+      fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === 'ok') {
