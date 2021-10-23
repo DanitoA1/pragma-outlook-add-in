@@ -49,7 +49,7 @@ jobs:
       - name: Deploy
         run: |-
           gcloud beta run deploy "${{ env.SERVICE_NAME }}" \
-            --set-env-vars "VUE_APP_BACKEND_URL=https://outlook-backend-alez5i4myq-ew.a.run.app/outlook \
+            --set-env-vars "VUE_APP_BACKEND_URL=https://outlook-backend-alez5i4myq-ew.a.run.app/outlook" \
             --project ${{ env.PROJECT_ID }} \
             --port "80" \
             --quiet \
