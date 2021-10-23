@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     async handleRedirection () {
-      this.$router.push({ name: 'TextFormat' })
+      this.$router.push({ name: 'Main' })
     },
     async checkUserLoggedIn () {
       this.isLoading = true

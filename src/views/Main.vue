@@ -39,7 +39,7 @@ import Rewrite from '@/components/Rewrite.vue'
 import Snippets from '@/components/Snippets.vue'
 
 export default {
-  name: 'TextFormat',
+  name: 'Main',
   data: () => ({
     tabs: 'get-snippet',
     isLoading: false,

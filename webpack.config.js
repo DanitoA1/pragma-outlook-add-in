@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const urlDev = 'https://localhost:8080/'
-const urlProd = 'https://www.contoso.com/' // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+const urlProd = 'https://storage.googleapis.com/pragma-outlook-plugin/' // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
 
 module.exports = async (env, options) => {
   const dev = options.mode === 'development'

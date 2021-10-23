@@ -30,7 +30,7 @@
 import Snippets from '@/components/Snippets.vue'
 
 export default {
-  name: 'Dashboard',
+  name: 'Snippets',
   components: {
     Snippets
   },
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     gotoDashboard () {
-      this.$router.push({ name: 'TextFormat' })
+      this.$router.push({ name: 'Main' })
     },
     async getSnippets () {
       this.isLoading = true
