@@ -18,7 +18,7 @@
       <li v-for="(rephrase, index) in allRephrase.data" :key="index" class="mt-2 cursor-pointer">
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
           <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
-          <text-highlight v-else class="originalText text-14px" highlightStyle="color: #6759FF;" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
+          <text-highlight v-else class="newText text-14px" highlightStyle="color: #828493;background: transparent;" caseSensitive="false" wholeWordMatch="true" :queries=" rephrase.sentence.split(' ').filter(x => !highlightedText.split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())) ">{{ rephrase.sentence }}</text-highlight>
 
           <!-- <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p> -->
         </div>
@@ -45,11 +45,8 @@
 </template>
 
 <style scoped>
-.originalText {
-  color: #828493;
-}
-.modifiedText {
-  color: #6759FF;
+.newText {
+  color: #6759FF;font-weight: bold;
 }
 </style>
 
