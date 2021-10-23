@@ -19,7 +19,7 @@
         <div @click="expandSnippet(index)" class="w-11/12 hover:text-black hover:bg-light-pink mx-auto p-3 border-b border-light-grey">
           <vue-editor v-if="index === editIndex" class="w-full" v-model="rephrase.sentence" />
 
-          <text-highlight v-else class="oldText text-14px" highlightClass="newText" :caseSensitive="false" :wholeWordMatch="true" :queries="rephrase.sentence.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(x => !highlightedText.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())).filter(word => word.length > 3)">{{ rephrase.sentence }}</text-highlight>
+          <text-highlight v-else class="oldText text-14px" :highlightStyle="{'color': '#6759FF','font-weight': 'bold', 'background': 'transparent !important'}" :caseSensitive="false" :wholeWordMatch="true" :queries="rephrase.sentence.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(x => !highlightedText.replace(/[\p{P}$+<=>^`|~]/gu, '').split(' ').filter(item => item.toLowerCase()).includes(x.toLowerCase())).filter(word => word.length > 3)">{{ rephrase.sentence }}</text-highlight>
 
           <!-- <p v-else class="text-primary text-14px" v-html="rephrase.sentence"></p> -->
         </div>
@@ -47,8 +47,7 @@
 
 <style scoped>
 .newText {
-  color: #6759FF;font-weight: bold;
-  background: transparent !important;
+  color: #6759FF;font-weight: bold;  background: transparent !important;
 }
 .oldText {
   color: #828493;font-weight: bold;
