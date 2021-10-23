@@ -13,11 +13,14 @@
       </div>
       <div v-else class="self-center mt-4">
         <p v-if="!isLoggedIn" class="font-semibold self-center">Please <span class="text-primary">login</span> to continue</p>
-        <div class="self-center flex mt-8">
+        <div class="self-center flex mt-8" v-if="this.authorizationUrl">
           <button @click="openLoginPopup()" class="bg-primary ml-8 text-white w-113px rounded-md py-2">
             Log In
           </button>
           <img class="ml-4 -mt-6" src="@/assets/svg/arrow.svg" alt="">
+        </div>
+        <div v-else>
+          We are sorry, login is unavailable at the moment, please try again later.
         </div>
       </div>
     </div>
@@ -40,7 +43,6 @@ export default {
     intervalRef: ''
   }),
   mounted () {
-    this.getSelectedText()
     this.checkUserLoggedIn()
   },
   computed: {
