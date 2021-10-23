@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Pragma"/>
   <Description DefaultValue="Pragma Outlook Vuejs Add-in"/>
-  <IconUrl DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/assets/img/Pragma.png"/>
-  <HighResolutionIconUrl DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/assets/img/Pragma.png"/>
+  <IconUrl DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/img/Pragma.png"/>
+  <HighResolutionIconUrl DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/img/Pragma.png"/>
   <SupportUrl DefaultValue="https://www.Pragma.com/help"/>
   <AppDomains>
     <AppDomain>https://www.Pragma.ai</AppDomain>
@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/index.html"/>
+        <SourceLocation DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -70,13 +70,12 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://storage.googleapis.com/pragma-outlook-plugin/index.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Pragma Add-in"/>

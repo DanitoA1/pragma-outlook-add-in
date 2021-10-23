@@ -84,20 +84,22 @@ export default {
       if (!this.intervalRef) {
         this.intervalRef = setInterval(() => {
           this.checkUserLoggedIn()
-        }, 2000)
+        }, 10000)
       }
     },
 
     getSelectedText () {
-      const item = window.Office.context.mailbox.item
-      item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
-        localStorage.setItem('selectedText', '')
-        // Put blank value in localstrage for selected Text
-        if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
-        } else {
-          localStorage.setItem('selectedText', asyncResult.value.data)
-        }
-      })
+      if (window.Office) {
+        const item = window.Office.context.mailbox.item
+        item.getSelectedDataAsync(window.Office.CoercionType.Text, function (asyncResult) {
+          localStorage.setItem('selectedText', '')
+          // Put blank value in localstrage for selected Text
+          if (asyncResult.status !== window.Office.AsyncResultStatus.Succeeded) {
+          } else {
+            localStorage.setItem('selectedText', asyncResult.value.data)
+          }
+        })
+      }
     }
   }
 }
