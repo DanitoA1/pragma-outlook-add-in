@@ -1,7 +1,7 @@
 <template>
   <div class="bg-light-pink h-full">
     <div class="flex flex-col justify-center" style="height: 100vh">
-      <img class="self-center" height="39" width="47" src="@/assets/svg/logo.svg" alt="logo">
+      <img class="self-center" height="39" width="47" src="@/assets/Pragma.png" alt="logo">
       <div class="self-center flex mt-1">
         <h1 class="text-xl mt-10">
           Welcome to Pragma

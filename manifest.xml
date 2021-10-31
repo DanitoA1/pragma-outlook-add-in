@@ -5,7 +5,7 @@
   <ProviderName>Pragma</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Pragma"/>
-  <Description DefaultValue="Pragma Outlook Vuejs Add-in"/>
+  <Description DefaultValue="Pragma Outlook Add-in"/>
   <IconUrl DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/img/Pragma.png"/>
   <HighResolutionIconUrl DefaultValue="https://outlook-frontend-alez5i4myq-ew.a.run.app/assets/img/Pragma.png"/>
   <SupportUrl DefaultValue="https://www.Pragma.com/help"/>
@@ -79,12 +79,10 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Pragma Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Pragma"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Open Pragma"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
