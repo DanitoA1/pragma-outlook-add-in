@@ -59,8 +59,8 @@ export default {
     },
     checkUserLoggedIn () {
       this.isLoading = true
-      var email = ""
-      if(window.Office){
+      var email = ''
+      if (window.Office) {
         email = window.Office.context.mailbox.userProfile.emailAddress
       }
       fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
