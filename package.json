@@ -27,11 +27,12 @@
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-plugin-router": "^4.5.15",
     "@vue/cli-plugin-vuex": "^4.5.15",
+    "@vue/cli-service": "^4.5.15",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "eslint": "^8.1.0",
+    "eslint": "7.32.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -41,5 +42,26 @@
     "vue-cli-plugin-tailwind": "~2.0.6",
     "vue-template-compiler": "^2.6.11",
     "whatwg-fetch": "^3.6.2"
-  }
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "description": "```\r npm install\r ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pragma-ai/outlook-addon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pragma-ai/outlook-addon/issues"
+  },
+  "homepage": "https://github.com/pragma-ai/outlook-addon#readme"
 }

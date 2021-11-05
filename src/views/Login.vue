@@ -25,7 +25,7 @@
         <div v-if="isLoggedIn">
           Logged in, Redirecting..
         </div>
-        {{errorMessage}}
+        <!-- {{errorMessage}} -->
       </div>
     </div>
   </div>
@@ -65,7 +65,6 @@ export default {
       if (window.Office && window.Office.context && window.Office.context.mailbox) {
         email = window.Office.context.mailbox.userProfile.emailAddress
       }
-      this.errorMessage = 'passed if'
       window.fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {

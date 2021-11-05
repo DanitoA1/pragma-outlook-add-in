@@ -4,9 +4,9 @@ import router from './router'
 import store from './store'
 import './assets/tailwind.css'
 import 'whatwg-fetch'
-import "isomorphic-fetch"
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'isomorphic-fetch'
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 
 Vue.config.productionTip = false
 
