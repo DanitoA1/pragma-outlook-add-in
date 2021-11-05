@@ -66,7 +66,7 @@ export default {
         email = window.Office.context.mailbox.userProfile.emailAddress
       }
       this.errorMessage = 'passed if'
-      fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
+      window.fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
           this.errorMessage = data

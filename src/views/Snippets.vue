@@ -55,7 +55,7 @@ export default {
     },
     async getSnippets () {
       this.isLoading = true
-      await fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
+      await window.fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
         .then(res => res.json())
         .then(data => {
           this.isLoading = false

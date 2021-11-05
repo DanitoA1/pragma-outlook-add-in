@@ -91,7 +91,7 @@ export default {
       }
       // Proceed if no snippets yet
       this.isLoading = true
-      await fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
+      await window.fetch(`${this.apiBaseUrl}/getSnippets?id=${this.userId}`)
         .then(res => res.json())
         .then(data => {
           this.isLoading = false
@@ -116,7 +116,7 @@ export default {
     async getRephrase (text) {
       this.isLoading = true
       this.apiError = null
-      await fetch(`${this.apiBaseUrl}/rephraseSentence?` + new URLSearchParams({
+      await window.fetch(`${this.apiBaseUrl}/rephraseSentence?` + new URLSearchParams({
         id: this.userId,
         sentence: text
       }))
