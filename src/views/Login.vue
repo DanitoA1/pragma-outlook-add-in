@@ -25,6 +25,7 @@
         <div v-if="isLoggedIn">
           Logged in, Redirecting..
         </div>
+        {{errorMessage}}
       </div>
     </div>
   </div>
@@ -43,7 +44,8 @@ export default {
     userId: '',
     authorizationUrl: '',
     windowRef: '',
-    intervalRef: ''
+    intervalRef: '',
+    errorMessage: ''
   }),
   mounted () {
     this.checkUserLoggedIn()
@@ -63,9 +65,12 @@ export default {
       if (window.Office && window.Office.context && window.Office.context.mailbox) {
         email = window.Office.context.mailbox.userProfile.emailAddress
       }
+      this.errorMessage = "passed if"
       fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
+          
+          this.errorMessage = data
           if (data.status === 'ok') {
             this.isLoggedIn = true
             this.userId = data.id
@@ -84,6 +89,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          this.errorMessage = error
           this.isLoading = false
         })
     },
