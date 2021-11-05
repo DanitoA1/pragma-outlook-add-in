@@ -65,11 +65,10 @@ export default {
       if (window.Office && window.Office.context && window.Office.context.mailbox) {
         email = window.Office.context.mailbox.userProfile.emailAddress
       }
-      this.errorMessage = "passed if"
+      this.errorMessage = 'passed if'
       fetch(`${this.apiBaseUrl}/checkUserLoggedIn?email=${email}`)
         .then(res => res.json())
         .then(data => {
-          
           this.errorMessage = data
           if (data.status === 'ok') {
             this.isLoggedIn = true
@@ -88,7 +87,6 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error)
           this.errorMessage = error
           this.isLoading = false
         })
